@@ -24,6 +24,7 @@ import lombok.Setter;
 @Table(name="TB_PARKING_SPOT")
 public class ParkingSpotModel implements Serializable {
 
+    public static final String CACHE_NAME = "ParkingSpot";
     private static final long serialVersionUID = 1L;
 
     @Id

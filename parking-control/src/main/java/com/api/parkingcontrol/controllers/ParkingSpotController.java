@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.parkingcontrol.dtos.ParkingSpotDto;
+import com.api.parkingcontrol.exceptions.EntityNotFoundationException;
 import com.api.parkingcontrol.models.ParkingSpotModel;
 import com.api.parkingcontrol.services.ParkingSpotService;
 
@@ -95,6 +96,7 @@ public class ParkingSpotController {
         Optional<ParkingSpotModel> parkingSpotModelOptional = parkingSpotService.findById(id);
 
         if (!parkingSpotModelOptional.isPresent()) {
+            // throw new EntityNotFoundationException("Parking Spot not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found");
         }
         var parkingSpotModel = new ParkingSpotModel();

@@ -7,6 +7,8 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -43,17 +45,17 @@ public class ParkingSpotService {
 
     }
 
-
+    @Cacheable(cacheNames = ParkingSpotModel.CACHE_NAME, key="#root.method.name")
     public Page<ParkingSpotModel> findAll(Pageable pageable) {
         return parkingSpotRepository.findAll(pageable);
     }
-
 
     public Optional<ParkingSpotModel> findById(UUID id) {
         return parkingSpotRepository.findById(id);
     }
 
     @Transactional
+    @CacheEvict(cacheNames = ParkingSpotModel.CACHE_NAME, key="#identifier")
     public void delete(ParkingSpotModel parkingSpotModel){
         parkingSpotRepository.delete(parkingSpotModel);
     }
